@@ -13,8 +13,13 @@ class QuoteAdvanceSpider(scrapy.Spider):
             text = quote.xpath('.//*[@class="text"]/text()').extract() 
             author = quote.xpath('.//*[@class="author"]/text()').extract()   
             tags = quote.xpath(".//*[@class = 'tag']/text()").extract()  
-
+            print (' ')
             print(text)
             print(author)
             print(tags)
+            print (' ')
+
+        next_page_url = response.xpath("//*[@class = 'next']/a/@href").extract_first()          
+        absolute_next_page_url = response.urljoin(next_page_url)
+        yield scrapy.Request(absolute_next_page_url)
 
